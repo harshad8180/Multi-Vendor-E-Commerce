@@ -1,11 +1,9 @@
 package com.ecom.entity;
 
 import com.ecom.domain.USER_ROLE;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,7 +32,10 @@ public class User {
 
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
+    @OneToMany
     private Set<Address> addresses = new HashSet<>();
 
+    @ManyToMany
+    @JsonIgnore // not show in frontend , use in backend to check coupon used or not
     private Set<Coupon> usedCoupons = new HashSet<>();
 }
