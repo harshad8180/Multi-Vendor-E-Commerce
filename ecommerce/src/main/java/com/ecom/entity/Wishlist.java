@@ -24,6 +24,6 @@ public class Wishlist {
     @OneToOne
     private User user;
 
-    @ManyToOne
+    @ManyToMany
     private Set<Product> products = new HashSet<>();
 }
