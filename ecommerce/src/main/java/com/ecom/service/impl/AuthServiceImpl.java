@@ -4,8 +4,10 @@ import com.ecom.config.JwtProvider;
 import com.ecom.domain.USER_ROLE;
 import com.ecom.entity.Cart;
 import com.ecom.entity.User;
+import com.ecom.entity.VerificationCode;
 import com.ecom.repository.CartRepository;
 import com.ecom.repository.UserRepository;
+import com.ecom.repository.VerificationCodeRepository;
 import com.ecom.response.SignupRequest;
 import com.ecom.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +33,17 @@ public class AuthServiceImpl implements AuthService {
 
     private final JwtProvider jwtProvider;
 
+    private final VerificationCodeRepository verificationCodeRepository;
+
 
     @Override
-    public String createUser(SignupRequest req) {
+    public String createUser(SignupRequest req) throws Exception {
+
+        VerificationCode verificationCode = verificationCodeRepository.findByEmail(req.getEmail());
+
+        if (verificationCode == null || !verificationCode.getOtp().equals(req.getOtp())){
+            throw new Exception("Wrong otp");
+        }
 
         User user = userRepository.findByEmail(req.getEmail());
 
