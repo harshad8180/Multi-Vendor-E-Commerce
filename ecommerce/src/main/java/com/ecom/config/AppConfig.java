@@ -35,7 +35,7 @@ public class AppConfig {
         return http.build();
     }
 
-    @Bean
+
     private CorsConfigurationSource corsConfigurationSource() {
         return new CorsConfigurationSource(){
             @Override
