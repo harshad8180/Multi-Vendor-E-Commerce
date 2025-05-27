@@ -2,7 +2,9 @@ package com.ecom.controller;
 
 import com.ecom.domain.USER_ROLE;
 import com.ecom.entity.User;
+import com.ecom.entity.VerificationCode;
 import com.ecom.repository.UserRepository;
+import com.ecom.response.ApiResponse;
 import com.ecom.response.AuthResponse;
 import com.ecom.response.SignupRequest;
 import com.ecom.service.AuthService;
@@ -30,6 +32,18 @@ public class AuthController {
         res.setJwt(jwt);
         res.setMessage("register successful");
         res.setRole(USER_ROLE.ROLE_CUSTOMER);
+
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/sent/login-signup-otp")
+    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody VerificationCode req) throws Exception {
+
+        authService.sentLoginOtp(req.getEmail());
+
+        ApiResponse res = new ApiResponse();
+
+        res.setMessage("otp sent successfully");
 
         return ResponseEntity.ok(res);
     }
