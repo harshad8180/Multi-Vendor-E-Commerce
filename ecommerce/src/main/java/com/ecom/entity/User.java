@@ -30,6 +30,8 @@ public class User {
 
     private String fullName;
 
+    private String mobile;
+
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
     @OneToMany

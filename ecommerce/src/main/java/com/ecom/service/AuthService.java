@@ -1,4 +1,7 @@
 package com.ecom.service;
 
-public class AuthService {
+import com.ecom.response.SignupRequest;
+
+public interface AuthService {
+    String createUser(SignupRequest req);
 }
