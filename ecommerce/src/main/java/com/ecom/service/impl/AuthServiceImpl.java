@@ -3,9 +3,11 @@ package com.ecom.service.impl;
 import com.ecom.config.JwtProvider;
 import com.ecom.domain.USER_ROLE;
 import com.ecom.entity.Cart;
+import com.ecom.entity.Seller;
 import com.ecom.entity.User;
 import com.ecom.entity.VerificationCode;
 import com.ecom.repository.CartRepository;
+import com.ecom.repository.SellerRepository;
 import com.ecom.repository.UserRepository;
 import com.ecom.repository.VerificationCodeRepository;
 import com.ecom.request.LoginRequest;
@@ -46,6 +48,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final CustomUserServiceImpl customUserService;
 
+    private final SellerRepository sellerRepository;
+
     @Override
     public String createUser(SignupRequest req) throws Exception {
 
@@ -82,16 +86,27 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void sentLoginOtp(String email) throws Exception {
+    public void sentLoginOtp(String email, USER_ROLE role) throws Exception {
         String SIGNING_PREFIX = "signing_";
 
         if(email.startsWith(SIGNING_PREFIX)){
             email=email.substring(SIGNING_PREFIX.length());
 
-            User user = userRepository.findByEmail(email);
-            if (user == null){
-                throw new Exception("user not exist with provided email");
+            if(role.equals(USER_ROLE.ROLE_SELLER))
+            {
+                Seller seller = sellerRepository.findByEmail(email);
+                if(seller == null){
+                    throw new Exception("seller not found");
+                }
             }
+            else
+            {
+                User user = userRepository.findByEmail(email);
+                if (user == null) {
+                    throw new Exception("user not exist with provided email");
+                }
+            }
+
         }
 
         VerificationCode isExist = verificationCodeRepository.findByEmail(email);
@@ -123,7 +138,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse signing(LoginRequest req) {
+    public AuthResponse signing(LoginRequest req) throws Exception {
         String username = req.getEmail();
         String otp = req.getOtp();
 
@@ -143,17 +158,22 @@ public class AuthServiceImpl implements AuthService {
         return authResponse;
     }
 
-    private Authentication authenticate(String username, String otp) {
+    private Authentication authenticate(String username, String otp) throws Exception {
         UserDetails userDetails = customUserService.loadUserByUsername(username);
 
+        String SELLER_PREFIX ="seller_";
+        if(username.startsWith(SELLER_PREFIX)){
+            username = username.substring(SELLER_PREFIX.length());
+        }
+
         if(userDetails == null){
-            throw  new BadCredentialsException("invalid username");
+            throw  new Exception("invalid username");
         }
 
         VerificationCode verificationCode = verificationCodeRepository.findByEmail(username);
 
         if(verificationCode == null || !verificationCode.getOtp().equals(otp)){
-            throw  new BadCredentialsException("wrong otp");
+            throw  new Exception("wrong otp");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

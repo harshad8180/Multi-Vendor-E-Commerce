@@ -4,6 +4,7 @@ import com.ecom.domain.USER_ROLE;
 import com.ecom.entity.User;
 import com.ecom.entity.VerificationCode;
 import com.ecom.repository.UserRepository;
+import com.ecom.request.LoginOtpRequest;
 import com.ecom.request.LoginRequest;
 import com.ecom.response.ApiResponse;
 import com.ecom.response.AuthResponse;
@@ -38,9 +39,9 @@ public class AuthController {
     }
 
     @PostMapping("/sent/login-signup-otp")
-    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody VerificationCode req) throws Exception {
+    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody LoginOtpRequest req) throws Exception {
 
-        authService.sentLoginOtp(req.getEmail());
+        authService.sentLoginOtp(req.getEmail(), req.getRole());
 
         ApiResponse res = new ApiResponse();
 
