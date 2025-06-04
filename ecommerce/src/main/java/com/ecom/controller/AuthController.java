@@ -4,6 +4,7 @@ import com.ecom.domain.USER_ROLE;
 import com.ecom.entity.User;
 import com.ecom.entity.VerificationCode;
 import com.ecom.repository.UserRepository;
+import com.ecom.request.LoginRequest;
 import com.ecom.response.ApiResponse;
 import com.ecom.response.AuthResponse;
 import com.ecom.response.SignupRequest;
@@ -46,5 +47,15 @@ public class AuthController {
         res.setMessage("otp sent successfully");
 
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/signing")
+    public ResponseEntity<AuthResponse> loginHandler(@RequestBody LoginRequest req) throws Exception {
+
+        AuthResponse authResponse = authService.signing(req);
+
+
+
+        return ResponseEntity.ok(authResponse);
     }
 }

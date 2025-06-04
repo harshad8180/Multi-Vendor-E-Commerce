@@ -25,7 +25,7 @@ public class AppConfig {
         http.sessionManagement(management->management.sessionCreationPolicy(
                 SessionCreationPolicy.STATELESS
         ))
-                .authorizeRequests(authorize->authorize
+                .authorizeHttpRequests(authorize->authorize
                         .requestMatchers("/api/**").authenticated() // this will first check JwtTokenValidator class then return here without jwt it will not permit/authenticated
                         .requestMatchers("/api/products/*/reviews").permitAll() // no need to provide jwt token
                         .anyRequest().permitAll()
@@ -58,7 +58,7 @@ public class AppConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate(){ // external api
+    public RestTemplate restTemplate(){ // for fetching external api
         return new RestTemplate();
     }
 }

@@ -7,7 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
+
+import io.jsonwebtoken.Jwt;
+
+
 import javax.crypto.SecretKey;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +28,7 @@ public class JwtProvider {
 
         return  Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+60000))
+                .setExpiration(new Date(new Date().getTime()+ 2 * 60 * 1000)) // 2 min
                 .claim("email", auth.getName())
                 .claim("authorities", roles)
                 .signWith(key)
@@ -32,13 +37,17 @@ public class JwtProvider {
 
     }
 
-    public String getEmailFromJwtToken(String jwt){
-        jwt = jwt.substring(7);
+    public String getEmailFromJwtToken(String jwt) {
+        jwt = jwt.substring(7); // remove "Bearer "
 
-        Claims claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+        Jwt<?, Claims> parsedJwt = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(jwt);
+
+        Claims claims = parsedJwt.getPayload();
 
         return String.valueOf(claims.get("email"));
-
     }
 
     private String populatedAuthorities(Collection<? extends GrantedAuthority> authorities) {

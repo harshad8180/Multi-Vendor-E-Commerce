@@ -8,20 +8,25 @@ import com.ecom.entity.VerificationCode;
 import com.ecom.repository.CartRepository;
 import com.ecom.repository.UserRepository;
 import com.ecom.repository.VerificationCodeRepository;
+import com.ecom.request.LoginRequest;
+import com.ecom.response.AuthResponse;
 import com.ecom.response.SignupRequest;
 import com.ecom.service.AuthService;
 import com.ecom.service.EmailService;
 import com.ecom.utils.OtpUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -38,6 +43,8 @@ public class AuthServiceImpl implements AuthService {
     private final VerificationCodeRepository verificationCodeRepository;
 
     private final EmailService emailService;
+
+    private final CustomUserServiceImpl customUserService;
 
     @Override
     public String createUser(SignupRequest req) throws Exception {
@@ -100,9 +107,55 @@ public class AuthServiceImpl implements AuthService {
 
         verificationCodeRepository.save(verificationCode);
 
-        String subject = "Harshad's E-Commerce Market login/signup otp";
-        String text = "your login/signup otp is - " + otp;
+        String subject = "🚀 Harshad's E-Commerce Market – Your OTP for Secure Login/Signup";
+
+        String text = "Hi Shopper,\n\n" +
+                "Thanks for choosing Harshad's E-Commerce Market!\n" +
+                "Your One-Time Password (OTP) for login/signup is: **" + otp + "**\n\n" +
+                "🕒 This code is valid for the next 5 minutes. Please do not share this OTP with anyone — it's your key to a secure and seamless shopping experience.\n\n" +
+                "If you didn't request this OTP, please ignore this email.\n\n" +
+                "Ready to explore amazing deals and products?\n" +
+                "Let's get you back to the market!\n\n" +
+                "Happy Shopping,\n" +
+                "— Team Harshad";
 
         emailService.sendVerificationOtpEmail(email,otp,subject,text);
+    }
+
+    @Override
+    public AuthResponse signing(LoginRequest req) {
+        String username = req.getEmail();
+        String otp = req.getOtp();
+
+        Authentication authentication = authenticate(username,otp);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token = jwtProvider.generateToken(authentication);
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setJwt(token);
+        authResponse.setMessage("Login successful");
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String roleName = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
+
+        authResponse.setRole(USER_ROLE.valueOf(roleName));
+        return authResponse;
+    }
+
+    private Authentication authenticate(String username, String otp) {
+        UserDetails userDetails = customUserService.loadUserByUsername(username);
+
+        if(userDetails == null){
+            throw  new BadCredentialsException("invalid username");
+        }
+
+        VerificationCode verificationCode = verificationCodeRepository.findByEmail(username);
+
+        if(verificationCode == null || !verificationCode.getOtp().equals(otp)){
+            throw  new BadCredentialsException("wrong otp");
+        }
+
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }
