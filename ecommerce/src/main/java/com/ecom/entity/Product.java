@@ -1,6 +1,6 @@
 package com.ecom.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private  String title;
+    private String title;
 
     private String description;
 
@@ -34,23 +34,22 @@ public class Product {
 
     private String color;
 
-    @ElementCollection // separate table for images
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> images = new ArrayList<>();
 
     private int numRatings;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Seller seller;
 
     private LocalDateTime createdAt;
 
-    private String Sizes;
+    private String sizes;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
-
-
 }
