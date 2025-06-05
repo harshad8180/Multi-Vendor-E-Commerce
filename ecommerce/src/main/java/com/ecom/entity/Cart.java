@@ -23,14 +23,14 @@ public class Cart {
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<CartItem> cartItems = new HashSet<>();
 
-    private double totalSellingPrice;
+    private int totalSellingPrice;
 
     private int totalItem;
 
-    private double totalMrpPrice;
+    private int totalMrpPrice;
 
     private int discount;
 

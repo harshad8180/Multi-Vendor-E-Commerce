@@ -24,9 +24,9 @@ public class Product {
 
     private String description;
 
-    private double mrpPrice;
+    private Double mrpPrice;
 
-    private double sellingPrice;
+    private Double sellingPrice;
 
     private int discountPercent;
 

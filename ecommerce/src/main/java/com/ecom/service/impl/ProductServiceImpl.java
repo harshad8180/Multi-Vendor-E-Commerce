@@ -10,14 +10,12 @@ import com.ecom.request.CreateProductRequest;
 import com.ecom.service.ProductService;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -78,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    private int calculateDiscountPercentage(int mrpPrice, int sellingPrice) {
+    private int calculateDiscountPercentage(Double mrpPrice, Double sellingPrice) {
         if (mrpPrice <= 0){
             throw new IllegalArgumentException("Actual price must be greater than 0");
         }
