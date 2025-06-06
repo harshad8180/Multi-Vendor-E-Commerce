@@ -8,8 +8,8 @@ import java.util.List;
 public class CreateProductRequest {
     private String title;
     private String description;
-    private Double mrpPrice;
-    private Double sellingPrice;
+    private int mrpPrice;
+    private int sellingPrice;
     private  String color;
     private List<String> images;
 

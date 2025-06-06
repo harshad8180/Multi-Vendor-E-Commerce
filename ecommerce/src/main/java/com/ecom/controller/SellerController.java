@@ -11,6 +11,7 @@ import com.ecom.request.LoginRequest;
 import com.ecom.response.AuthResponse;
 import com.ecom.service.AuthService;
 import com.ecom.service.EmailService;
+import com.ecom.service.SellerReportService;
 import com.ecom.service.SellerService;
 import com.ecom.utils.OtpUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,9 @@ public class SellerController {
     private final AuthService authService;
 
     private final EmailService emailService;
-    private final JwtProvider jwtProvider;
+//    private final JwtProvider jwtProvider;
+
+    private final SellerReportService sellerReportService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginSeller (@RequestBody LoginRequest req) throws Exception {
@@ -90,15 +93,16 @@ public class SellerController {
         return new ResponseEntity<>(seller, HttpStatus.OK);
     }
 
-//    @GetMapping("/report")
-//    public  ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception{
+    @GetMapping("/report")
+    public  ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception{
 //        String email = jwtProvider.getEmailFromJwtToken(jwt);
 //        Seller seller = sellerService.getSellerByEmail(email);
-//
-//        SellerReport report = sellerReportService.getSellerReport(seller);
-//
-//        return new ResponseEntity<>(report, HttpStatus.OK);
-//    }
+        Seller seller = sellerService.getSellerProfile(jwt);
+
+        SellerReport report = sellerReportService.getSellerReport(seller);
+
+        return new ResponseEntity<>(report, HttpStatus.OK);
+    }
 
     @GetMapping
     public  ResponseEntity<List<Seller>> getAllSellers(@RequestParam(required = false)AccountStatus status){

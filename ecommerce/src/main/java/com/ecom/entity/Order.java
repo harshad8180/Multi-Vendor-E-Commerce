@@ -25,6 +25,8 @@ public class Order {
 
     private String orderId;
 
+    private Long sellerId;
+
     @ManyToOne
     private User user;
 

@@ -27,6 +27,8 @@ public class SellerReport {
 
     private Long netEarnings = 0L;
 
+    private Integer totalSales = 0;
+
     private Integer totalOrders = 0;
 
     private Integer canceledOrders = 0;
