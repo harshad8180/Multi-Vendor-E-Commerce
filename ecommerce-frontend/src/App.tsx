@@ -1,6 +1,7 @@
 
 import { ThemeProvider } from '@mui/material'
 import './App.css'
+import './index.css'
 import Navbar from './customer/components/Navbar/Navbar'
 import customeTheme from './Theme/customeTheme'
 
