@@ -3,6 +3,7 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { AddShoppingCart, FavoriteBorder, Storefront } from "@mui/icons-material";
+import CategorySheet from "./CategorySheet";
 
 const Navbar = () => {
 
@@ -11,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <Box>
+      <Box className="bg-white shadow-lg left-0 top-0 right-0 sticky" sx={{ zIndex: 2 }}>
         <div className="flex items-center justify-between px-5 lg:px-20 h-[70px] border-b ">
           <div className="flex items-center gap-9">
             <div className="flex items-center gap-2">
@@ -69,6 +70,10 @@ const Navbar = () => {
               Become Seller
             </Button>}
           </div>
+        </div>
+
+        <div className="categorySheet absolute top-[4.41rem left-20 right-20 border ">
+          <CategorySheet/>
         </div>
       </Box>
     </div>
