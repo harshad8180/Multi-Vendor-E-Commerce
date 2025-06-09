@@ -4,7 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { AddShoppingCart, FavoriteBorder, Storefront } from "@mui/icons-material";
 import CategorySheet from "./CategorySheet";
-import { mainCategory } from "../../../data/mainCategory";
+import { mainCategory } from "../../../data/catogory/mainCategory";
 
 const Navbar = () => {
 
@@ -30,11 +30,11 @@ const Navbar = () => {
             </div>
 
             <ul className="flex items-center gap-2 md:gap-3 lg:gap-6 text-sm md:text-base lg:text-lg font-semibold text-gray-800">
-             
+
               {
                 mainCategory.map(
-                    (item) => <li key={item.categoryId} 
-                    onMouseLeave={() =>{ 
+                  (item) => <li key={item.categoryId}
+                    onMouseLeave={() => {
                       setShowCategorySheet(false)
                     }}
                     onMouseOver={() => {
@@ -85,7 +85,7 @@ const Navbar = () => {
           onMouseLeave={() => setShowCategorySheet(false)}
           onMouseEnter={() => setShowCategorySheet(true)}
           className="categorySheet absolute top-[4.41rem left-20 right-20 border ">
-          <CategorySheet selectedCategory={selectedCategory}/>
+          <CategorySheet selectedCategory={selectedCategory} />
         </div>}
       </Box>
     </div>
