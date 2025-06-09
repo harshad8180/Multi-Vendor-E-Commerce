@@ -1,14 +1,19 @@
 import { Avatar, Box, Button, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { AddShoppingCart, FavoriteBorder, Storefront } from "@mui/icons-material";
 import CategorySheet from "./CategorySheet";
+import { mainCategory } from "../../../data/mainCategory";
 
 const Navbar = () => {
 
   const theme = useTheme();
   const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
+
+  const [selectedCategory, setSelectedCategory] = useState("men");
+
+  const [showCategorySheet, setShowCategorySheet] = useState(false);
 
   return (
     <div>
@@ -25,14 +30,18 @@ const Navbar = () => {
             </div>
 
             <ul className="flex items-center gap-2 md:gap-3 lg:gap-6 text-sm md:text-base lg:text-lg font-semibold text-gray-800">
-              {/* {["Men", "Women", "Kids", "Home & Living", "Beauty & Personal Care", "Electronics", "Sports & Fitness", "Automotive"].map((item) => <li key={item} className="mainCategory hover:text-primary-color hover:border-b-2 h-[70px] px-4 border-primary-color flex items-center">{item}</li>)} */}
-
+             
               {
-                ["Men",
-                  "Women",
-                  "Home & Furniture",
-                  "Electronics"].map(
-                    (item) => <li key={item} className="mainCategory hover:text-primary-color hover:border-b-2 h-[70px] px-4 border-primary-color flex items-center">{item}</li>)
+                mainCategory.map(
+                    (item) => <li key={item.categoryId} 
+                    onMouseLeave={() =>{ 
+                      setShowCategorySheet(false)
+                    }}
+                    onMouseOver={() => {
+                      setSelectedCategory(item.categoryId);
+                      setShowCategorySheet(true);
+                    }}
+                    className="mainCategory hover:text-primary-color hover:border-b-2 h-[70px] px-4 border-primary-color flex items-center">{item.name}</li>)
               }
 
             </ul>
@@ -72,9 +81,12 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="categorySheet absolute top-[4.41rem left-20 right-20 border ">
-          <CategorySheet/>
-        </div>
+        {showCategorySheet && <div
+          onMouseLeave={() => setShowCategorySheet(false)}
+          onMouseEnter={() => setShowCategorySheet(true)}
+          className="categorySheet absolute top-[4.41rem left-20 right-20 border ">
+          <CategorySheet selectedCategory={selectedCategory}/>
+        </div>}
       </Box>
     </div>
   );

@@ -1,4 +1,4 @@
-export const mainCategories = [
+export const mainCategory = [
   {
     name: "Men",
     categoryId: "men",
