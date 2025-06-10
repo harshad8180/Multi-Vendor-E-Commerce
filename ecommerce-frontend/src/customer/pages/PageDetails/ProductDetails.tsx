@@ -4,6 +4,7 @@ import { teal } from '@mui/material/colors'
 import { Button, Divider } from '@mui/material'
 import { Add, AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material'
 import SimilarProducts from './SimilarProducts'
+import ReviewCard from '../Review/ReviewCard'
 
 const ProductDetails = () => {
 
@@ -127,6 +128,11 @@ const ProductDetails = () => {
             <p>
               Look delicate and dainty like flowers in this purple net saree. Adorned with floral embroidery all over detailed with stones, the saree has its unique charm worthy of your praises.
             </p>
+          </div>
+
+          <div className='mt-12 space-y-5'>
+            <ReviewCard/>
+            <Divider/>
           </div>
 
 
