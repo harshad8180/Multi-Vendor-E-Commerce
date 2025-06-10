@@ -3,6 +3,7 @@ import StarIcon from '@mui/icons-material/Star'
 import { teal } from '@mui/material/colors'
 import { Button, Divider } from '@mui/material'
 import { Add, AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material'
+import SimilarProducts from './SimilarProducts'
 
 const ProductDetails = () => {
 
@@ -124,16 +125,20 @@ const ProductDetails = () => {
 
           <div className='mt-5'>
             <p>
-              Care instructions: Hand Wash Only
-              The saree is in purple color and net fabric
-              Saree Length - 5.5 Meter
-              Blouse Length - 0.8 Meter
-              In Box: Saree with unstitched blouse
+              Look delicate and dainty like flowers in this purple net saree. Adorned with floral embroidery all over detailed with stones, the saree has its unique charm worthy of your praises.
             </p>
           </div>
 
 
         </section>
+      </div>
+
+      <div className='mt-20'>
+        <h1 className='text-lg font-bold'>Similar Products</h1>
+        <div className='pt-5'>
+
+        <SimilarProducts/>
+        </div>
       </div>
 
     </div>
