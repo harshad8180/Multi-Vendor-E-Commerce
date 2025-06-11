@@ -3,6 +3,7 @@ import CartItem from './CartItem'
 import { Close, LocalOffer } from '@mui/icons-material'
 import { teal } from '@mui/material/colors'
 import { Button, IconButton, TextField } from '@mui/material'
+import PricingCard from './PricingCard'
 
 const Cart = () => {
   const [couponCode, setCouponCode] = useState("")
@@ -49,6 +50,15 @@ const Cart = () => {
               </div>
             </div>
             }
+          </div>
+
+          <div className='border rounded-md'>
+            <PricingCard/>
+
+            <div className='p-5'>
+              <Button fullWidth variant='contained' sx={{py: "11px"}}>Buy Now</Button>
+            </div>
+
           </div>
         </div>
       </div>
