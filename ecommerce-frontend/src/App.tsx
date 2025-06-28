@@ -12,7 +12,9 @@ import Cart from './customer/pages/Cart/Cart'
 import Checkout from './customer/pages/Checkout/Checkout'
 import Account from './customer/pages/Account/Account'
 import { Route, Routes } from 'react-router-dom'
-import BecomSeller from './customer/pages/BecomeSeller/BecomeSeller'
+import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard'
+import BecomeSeller from './customer/pages/BecomeSeller/BecomeSeller'
+
 
 
 function App() {
@@ -37,7 +39,8 @@ function App() {
           <Route path='/cart' element={<Cart/>} />
           <Route path='/checkout' element={<Checkout/>} />
           <Route path='/account/*' element={<Account/>} />
-          <Route path='/become-seller' element={<BecomSeller/>} />
+          <Route path='/become-seller' element={<BecomeSeller/>} />
+          <Route path='/seller/*' element={<SellerDashboard/>} />
         </Routes>
       </div>
     </ThemeProvider>
