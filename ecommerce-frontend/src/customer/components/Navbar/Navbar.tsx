@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { AddShoppingCart, FavoriteBorder, Storefront } from "@mui/icons-material";
 import CategorySheet from "./CategorySheet";
 import { mainCategory } from "../../../data/catogory/mainCategory";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -15,6 +16,8 @@ const Navbar = () => {
 
   const [showCategorySheet, setShowCategorySheet] = useState(false);
 
+  const navigate = useNavigate()
+
   return (
     <div>
       <Box className="bg-white shadow-lg left-0 top-0 right-0 sticky" sx={{ zIndex: 2 }}>
@@ -24,7 +27,7 @@ const Navbar = () => {
               {!isLarge && <IconButton>
                 <MenuIcon />
               </IconButton>}
-              <h1 className="logo cursor-pointer text-lg md:text-2xl text-primary-color">
+              <h1 onClick={() => navigate("/")} className="logo cursor-pointer text-lg md:text-2xl text-primary-color">
                 Ecommerce Bazaar
               </h1>
             </div>
