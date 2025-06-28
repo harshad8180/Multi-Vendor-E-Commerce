@@ -3,7 +3,7 @@ import SellerAccountForm from './SellerAccountForm'
 import SellerLoginForm from './SellerLoginForm'
 import { Button } from '@mui/material'
 
-const BecomSeller = () => {
+const BecomeSeller = () => {
     const [isLogin, setIsLogin] = useState(false)
     const handleShowPage = () => {
         setIsLogin(!isLogin)
@@ -47,4 +47,4 @@ const BecomSeller = () => {
   )
 }
 
-export default BecomSeller
+export default BecomeSeller

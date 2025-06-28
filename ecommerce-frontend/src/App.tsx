@@ -12,7 +12,7 @@ import Cart from './customer/pages/Cart/Cart'
 import Checkout from './customer/pages/Checkout/Checkout'
 import Account from './customer/pages/Account/Account'
 import { Route, Routes } from 'react-router-dom'
-import BecomSeller from './customer/pages/BecomeSeller/BecomSeller'
+import BecomSeller from './customer/pages/BecomeSeller/BecomeSeller'
 
 
 function App() {
