@@ -99,7 +99,7 @@ const Checkout = () => {
                               item.value == "stripe" ? "w-14" : ""
                             } object-contain`}
                             src={item.image}
-                            alt=""
+                            alt={item.label}
                           />
                         }
                       />
