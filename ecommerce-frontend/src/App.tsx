@@ -35,6 +35,7 @@ function App() {
           <Route path='/product-details/:categoryId/:name/:productId' element={<ProductDetails/>} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/checkout' element={<Checkout/>} />
+          <Route path='/account/*' element={<Account/>} />
         </Routes>
       </div>
     </ThemeProvider>

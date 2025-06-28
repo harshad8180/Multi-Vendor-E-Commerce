@@ -4,12 +4,16 @@ import { Close, LocalOffer } from '@mui/icons-material'
 import { teal } from '@mui/material/colors'
 import { Button, IconButton, TextField } from '@mui/material'
 import PricingCard from './PricingCard'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
   const [couponCode, setCouponCode] = useState("")
   const handleChange = (e: any) => {
     setCouponCode(e.target.value)
   }
+
+  const navigate = useNavigate()
+
   return (
     <div className='pt-10 px-5 sm:px-10 md:px-60 min-h-screen'>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -56,7 +60,7 @@ const Cart = () => {
             <PricingCard/>
 
             <div className='p-5'>
-              <Button fullWidth variant='contained' sx={{py: "11px"}}>Buy Now</Button>
+              <Button onClick={()=> navigate('/checkout')} fullWidth variant='contained' sx={{py: "11px"}}>Buy Now</Button>
             </div>
 
           </div>

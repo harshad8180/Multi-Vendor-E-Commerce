@@ -58,7 +58,7 @@ const Navbar = () => {
 
             {
               true ?
-                <Button className="flex items-center gap-2">
+                <Button onClick={()=> navigate("/account/orders")} className="flex items-center gap-2">
                   <Avatar
                     sx={{ width: 29, height: 29 }} src="https://i.pravatar.cc/150?img=3" />
                   <h1 className="font-semibold hidden lg:block">
@@ -74,7 +74,7 @@ const Navbar = () => {
               <FavoriteBorder sx={{ fontSize: 29 }} />
             </IconButton>
 
-            <IconButton>
+            <IconButton onClick={()=> navigate('/cart')}>
               <AddShoppingCart className="text-gray-700" sx={{ fontSize: 29 }} />
             </IconButton>
 
