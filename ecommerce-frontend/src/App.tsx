@@ -15,10 +15,16 @@ import { Route, Routes } from 'react-router-dom'
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard'
 import BecomeSeller from './customer/pages/BecomeSeller/BecomeSeller'
 import AdminDashboard from './admin/pages/Dashboard/AdminDashboard'
+import { useEffect } from 'react'
+import { fetchProduct } from './state/fetchProduct'
 
 
 
 function App() {
+
+  useEffect(() => {
+    fetchProduct()
+  },[])
 
   return (
     <ThemeProvider theme={customeTheme}>
