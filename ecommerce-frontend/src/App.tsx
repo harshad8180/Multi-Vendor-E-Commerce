@@ -14,6 +14,7 @@ import Account from './customer/pages/Account/Account'
 import { Route, Routes } from 'react-router-dom'
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard'
 import BecomeSeller from './customer/pages/BecomeSeller/BecomeSeller'
+import AdminDashboard from './admin/pages/Dashboard/AdminDashboard'
 
 
 
@@ -39,8 +40,11 @@ function App() {
           <Route path='/cart' element={<Cart/>} />
           <Route path='/checkout' element={<Checkout/>} />
           <Route path='/account/*' element={<Account/>} />
+
           <Route path='/become-seller' element={<BecomeSeller/>} />
           <Route path='/seller/*' element={<SellerDashboard/>} />
+
+          <Route path='/admin/*' element={<AdminDashboard/>} />
         </Routes>
       </div>
     </ThemeProvider>
