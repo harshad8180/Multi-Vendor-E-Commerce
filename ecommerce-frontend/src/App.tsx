@@ -16,10 +16,14 @@ import BecomeSeller from "./customer/pages/BecomeSeller/BecomeSeller";
 import AdminDashboard from "./admin/pages/Dashboard/AdminDashboard";
 import { useEffect } from "react";
 import { fetchProduct } from "./State/fetchProduct";
+import { useAppDispatch } from "./State/Store";
+import { fetchSellerProfile } from "./State/seller/sellerSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    fetchProduct();
+    dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""));
   }, []);
 
   return (
