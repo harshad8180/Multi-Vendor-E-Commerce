@@ -51,7 +51,7 @@ const sellerSlice = createSlice({
       })
       .addCase(fetchSellerProfile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       }),
   ],
 });
