@@ -1,8 +1,12 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import React from "react";
+import { useAppDispatch } from "../../../State/Store";
+import { sendLoginSignupOtp, signin } from "../../../State/AuthSlice";
+import { sellerLogin } from "../../../State/seller/sellerAuthSlice";
 
 const SellerLoginForm = () => {
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -10,8 +14,16 @@ const SellerLoginForm = () => {
     },
     onSubmit: (values) => {
       console.log("form data ", values);
+      dispatch(sellerLogin({ email: values.email, otp: values.otp }));
     },
   });
+
+  const handleSendOtp = () => {
+    dispatch(sendLoginSignupOtp({ email: formik.values.email }));
+  };
+
+  const handleLogin = () => {};
+
   return (
     <div>
       <h1 className="text-center font-bold text-xl text-primary-color pb-5">
@@ -30,7 +42,9 @@ const SellerLoginForm = () => {
         />
         {true && (
           <div className="space-y-2">
-            <p className="font-medium text-sm opacity-60">Enter OTP sent to your email</p>
+            <p className="font-medium text-sm opacity-60">
+              Enter OTP sent to your email
+            </p>
             <TextField
               fullWidth
               name="otp"
@@ -43,6 +57,24 @@ const SellerLoginForm = () => {
             />
           </div>
         )}
+
+        <Button
+          onClick={handleSendOtp}
+          fullWidth
+          variant="contained"
+          sx={{ py: "11px" }}
+        >
+          send otp
+        </Button>
+
+        <Button
+          onClick={() => formik.handleSubmit()}
+          fullWidth
+          variant="contained"
+          sx={{ py: "11px" }}
+        >
+          Login
+        </Button>
       </div>
     </div>
   );

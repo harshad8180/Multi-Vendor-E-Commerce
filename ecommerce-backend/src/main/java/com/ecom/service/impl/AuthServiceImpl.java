@@ -171,7 +171,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         VerificationCode verificationCode = verificationCodeRepository.findByEmail(username);
-
+        System.out.println("---"+username+"---"+otp);
         if(verificationCode == null || !verificationCode.getOtp().equals(otp)){
             throw  new Exception("wrong otp");
         }

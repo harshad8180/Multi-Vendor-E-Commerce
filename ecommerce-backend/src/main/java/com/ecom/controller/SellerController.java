@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/seller")
+@RequestMapping("/sellers")
 public class SellerController {
     private final SellerService sellerService;
     public final VerificationCodeRepository verificationCodeRepository;
